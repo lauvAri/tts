@@ -1,7 +1,8 @@
 <template>
     <nav id="navbar">
         <div class="logo">
-            <img src="../assets/logo.svg" alt="">
+            <!-- <img src="../assets/logo.svg" alt=""> -->
+            <h1 id="logo-title">惠合声SynthoVoice</h1>
         </div>
         <div class="links">
             <ul>
@@ -17,6 +18,9 @@
                 <router-link to="/voice-cloning">
                     <li>声音克隆</li>
                 </router-link>
+                <router-link to="/ppt-upload">
+                    <li>PPT上传</li>
+                </router-link>
             </ul>
         </div>
         <div class="avatar"></div>
@@ -24,6 +28,7 @@
 </template>
 
 <style scoped>
+
 #navbar {
     display: flex;
     flex-direction: row;
@@ -31,6 +36,27 @@
     align-items: center;
     height: 8vh;
     background:#1e293b;
+}
+
+div.logo {
+    flex: 1;
+    margin-left: 1rem;
+}
+
+div.links {
+    flex: 3;
+}
+
+#logo-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    
+    background: linear-gradient(125deg, var(--crimson-9), var(--amber-10));
+    /*设置渐变的方向从左到右*/
+    background-clip: text;
+    /*将设置的背景颜色限制在文字中*/
+    -webkit-text-fill-color: transparent;
+    /*给文字设置成透明*/
 }
 
 li {
@@ -42,7 +68,7 @@ li {
 }
 
 li:hover {
-    background: linear-gradient(125deg, var(--crimson-9), var(--amber-10));
+    background: linear-gradient(45deg, var(--crimson-9), var(--amber-10));
     /*设置渐变的方向从左到右*/
     background-clip: text;
     /*将设置的背景颜色限制在文字中*/
