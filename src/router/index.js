@@ -6,7 +6,7 @@ import TextToSpeech from '../views/TextToSpeech.vue'
 import VideoSubtitles from '../views/VideoSubtitles.vue'
 import AudioLectures from '../views/AudioLectures.vue'
 import VoiceCloning from '../views/VoiceCloning.vue'
-import PPTUpload from '@/views/PPTUpload.vue'
+// import PPTUpload from '@/views/PPTUpload.vue'
 
 const routes = [
   {
@@ -34,11 +34,11 @@ const routes = [
     name: 'VoiceCloning',
     component: VoiceCloning
   },
-  {
-    path: '/ppt-upload',
-    name: 'PPTUpload',
-    component: PPTUpload
-  }
+  // {
+  //   path: '/ppt-upload',
+  //   name: 'PPTUpload',
+  //   component: PPTUpload
+  // }
 ]
 
 const router = createRouter({
