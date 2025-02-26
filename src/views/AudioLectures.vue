@@ -1,10 +1,10 @@
 <template>
   <div class="pdf-viewer">
-    <h1>PDF Viewer and Summarizer</h1>
+    <h1>上传文档，制作有声课件</h1>
     <input type="file" accept="application/pdf" @change="handleFileUpload" />
     <div id="pdf-info">
       <v-btn v-on:click="fetchPdfPage(currentPage)">上传</v-btn>
-      <p>{{currentPage}} / {{ pages }}</p>
+      <p v-if="imageData">{{currentPage}} / {{ pages }}</p>
     </div>
     <img v-if="imageData" :src="imageData" alt="PDF Page" width="50%">
     <div class="controls" v-if="imageData">
@@ -12,18 +12,29 @@
       <v-btn @click="nextPage" :disabled="currentPage === pages">next</v-btn>
       <v-btn @click="getSummary">summary</v-btn>
     </div>
-    <div class="summary">
-      <p>{{ summary }}</p>
-      <v-btn>播放</v-btn>
+    <div class="summary" v-if="summary">
+      <v-textarea
+          label="摘要"
+          row-height="10"
+          rows="5"
+          variant="outlined"
+          v-model="summary"
+      ></v-textarea>
+      <v-btn @click="getSummaryAudio">获取音频</v-btn>
+      <div class="audio">
+        <audio v-if="summaryAudio" :src="summaryAudio" controls></audio>
+      </div>
+      
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { VuePDF, usePDF } from '@tato30/vue-pdf';
-import '@tato30/vue-pdf/style.css';
-import { VPdfViewer } from '@vue-pdf-viewer/viewer'
+// import { VuePDF, usePDF } from '@tato30/vue-pdf';
+// import '@tato30/vue-pdf/style.css';
+// import { VPdfViewer } from '@vue-pdf-viewer/viewer'
+// import { warn } from 'pdfjs-dist/types/src/shared/util';
 
 const flaskURL = 'http://localhost:5000';
 
@@ -33,6 +44,7 @@ const currentPage = ref(1);
 const pdfPath = ref("upload/pdf/test.pdf");
 const imageData = ref(null);
 const summary = ref(null);
+const summaryAudio = ref(null);
 
 // 获取某一页pdf的图片
 const fetchPdfPage = (pageNum) => {
@@ -128,6 +140,29 @@ const getSummary = () => {
   //       console.log("summary data: ", data);
 
   //     })
+}
+
+const getSummaryAudio = () => {
+  fetch(`${flaskURL}/api/summary2audio`, {
+    method: "post",
+    body: JSON.stringify({
+      summary: summary.value
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(response => {
+    if (response.ok) {
+      return response.blob();
+    }
+    alert("生成音频文件失败")
+    throw new Error("生成音频文件失败");
+  }).then(blob => {
+    const url = URL.createObjectURL(blob);
+    summaryAudio.value = url;
+  }).catch(error => {
+    console.error("生成音频文件失败，请稍后重试", error);
+  })
 }
 </script>
 
