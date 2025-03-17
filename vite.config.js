@@ -15,6 +15,15 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: "https://meta.guiji.ai",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''), // 移除 `/api` 前缀
+      }
+    }
+  }
   // server: {
   //   proxy: {
   //     // 配置代理规则

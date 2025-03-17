@@ -7,11 +7,22 @@ import router from './router'
 </script>
 
 <template>
-  <navigation />
-  <router-view />
+  <div class="all">
+    <navigation class="nav"/>
+    <router-view class="view"/>
+  </div>
 </template>
 
 <style scoped>
+.all {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.view {
+  flex: 1;
+}
 
 </style>
 

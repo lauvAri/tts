@@ -34,7 +34,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 8vh;
+    padding: 12px;
     background:#1e293b;
 }
 
